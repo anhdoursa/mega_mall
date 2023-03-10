@@ -1,17 +1,17 @@
 import { useAnimations, useGLTF } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 
 const Mall = () => {
   const { scene, animations } = useGLTF('models/supermarket_low_poly_anim.glb');
 
-  const { actions, names } = useAnimations(animations);
+  const { ref, actions, names } = useAnimations(animations);
+  useEffect(() => {
+    actions[names[0]].play();
+    actions[names[1]].play();
+    actions[names[2]].play();
+  }, [actions, names]);
 
-  // actions[names[0]].play();
-  console.log(actions);
-  const object = useRef();
-  useFrame(({ camera }) => {});
-  return <primitive position={[0, 0, 10]} ref={object} object={scene}></primitive>;
+  return <primitive position={[0, 0, 10]} ref={ref} object={scene}></primitive>;
 };
 
 export default Mall;
